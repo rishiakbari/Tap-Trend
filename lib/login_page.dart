@@ -1,18 +1,26 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:taptrend/home_screen.dart';
+import 'package:taptrend/models/login_model.dart';
 import 'package:taptrend/service/api_service.dart';
+
 // import 'package:taptrend/utils/api.dart';
 // import 'package:taptrend/models/login_model.dart';
 // import 'package:taptrend/service/api_service.dart';
 
 import 'package:taptrend/utils/colorz.dart';
-import 'package:taptrend/widget/custom_textbutton.dart';
+import 'package:taptrend/utils/helper.dart';
+import 'package:taptrend/widget/custom_text_button.dart';
 import 'package:taptrend/widget/textformfield.dart';
 
-import 'models/login_model.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  static const routeName = '/second';
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -24,10 +32,34 @@ final _formkey= GlobalKey<FormState>();
 bool obscureText = true;
 TextEditingController passwordController = TextEditingController();
 TextEditingController userNameController= TextEditingController();
+late SharedPreferences _sharedPreferences;
+
+void _init() async {
+    var _sharedPreferences = await SharedPreferences.getInstance();
+  //  var isLoggined= _sharedPreferences.getBool('login');
+}
 
 _login()async{
   LoginModel login = await ApiService.login(username: userNameController.text, password: passwordController.text);
+  if(login.body!=null){
+    _sharedPreferences.setString('authToken', login.body!.token.toString());
+          _sharedPreferences.setString('authUser', jsonEncode(login.body!));
+    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+  }else{
+    if(mounted){
+      Helper.showSnackBar(context: context, text: login.message!);
+    }
+    
+  }
+
 }
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _init();
+  }
+  
   
   @override
   Widget build(BuildContext context) {
@@ -69,55 +101,50 @@ _login()async{
                   const SizedBox(height: 5,),
                 ],
               ),
-               Container(
-                  height: 60,
-                      child:  CustomTextFormField(
-                        // validator: (val) => val!=null && val.isNotEmpty
-                        // ? null
-                        // : 'please enter your currect name',
-                        controller: userNameController,
-                        validator: (val) {
-                          if(val!.isEmpty || RegExp(r'^[a-z A-Z]+$').hasMatch(val!)){
-                            return "please enter your currect name";
-                          }else{
-                            return null;
-                          }
-                        },
-                        fillColor: Colorz.insightBoxGradient1,
-                        keyboardType: TextInputType.name,
-                        hintText: "username",
-                        prefixIcon: const Icon(Icons.phone,color: Colorz.textSecondary,),
-                      ),
-                ),
+               CustomTextFormField(
+                 controller: userNameController,
+                 // validator: (isLoggined) => isLoggined!=null && isLoggined.isNotEmpty
+                 // ? null
+                 // : 'please enter your currect name',
+                 
+                 validator: (isLoggined) {
+                   if(isLoggined!.isEmpty || RegExp(r'^[a-z A-Z]+$').hasMatch(isLoggined)){
+                     return "required field";
+                   }else{
+                     return null;
+                   }
+                 },
+                 fillColor: Colorz.insightBoxGradient1,
+                 keyboardType: TextInputType.name,
+                 hintText: "username",
+                 prefixIcon: const Icon(Icons.phone,color: Colorz.textSecondary,),
+               ),
                 const SizedBox(height: 5,),
         
-                Container(
-                  height: 60,
-                      child:  CustomTextFormField(
-                        validator: (val) {
-                          if(val!.isEmpty || RegExp(r'^[+]*[()]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]+$').hasMatch(val!)){
-                            return "please enter your currect phone number";
-                          }else{
-                            return null;
-                          }
-                        },
-                        controller: passwordController,
-                        fillColor: Colorz.insightBoxGradient1,
-                        obscureText: obscureText,
-                        hintText: "password",
-                        prefixIcon: const Icon(
-                          Icons.lock,
-                          color: Colorz.textSecondary,
-                          ),
-                        suffixIcon: IconButton(
-                          color: Colorz.textSecondary,
-                          icon: obscureText ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off), 
-                        onPressed: () {
-                          setState(() {
-                            obscureText = !obscureText;
-                          });
-                        }),
-                      ),
+                CustomTextFormField(
+                  validator: (isLoggined) {
+                    if(isLoggined!.isEmpty || RegExp(r'^[+]*[()]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]+$').hasMatch(isLoggined)){
+                      return "required field";
+                    }else{
+                      return null;
+                    }
+                  },
+                  controller: passwordController,
+                  fillColor: Colorz.insightBoxGradient1,
+                  obscureText: obscureText,
+                  hintText: "password",
+                  prefixIcon: const Icon(
+                    Icons.lock,
+                    color: Colorz.textSecondary,
+                    ),
+                  suffixIcon: IconButton(
+                    color: Colorz.textSecondary,
+                    icon: obscureText ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off), 
+                  onPressed: () {
+                    setState(() {
+                      obscureText = !obscureText;
+                    });
+                  }),
                 ),
         
                 
@@ -133,14 +160,17 @@ _login()async{
                   child: CustomTextButton(
                     text: "Login",
                     onPressed: () {
-                      if(_formkey.currentState!.validate()){  // check if data are valid
-                        _formkey.currentState?.save;
-                        // Api.
-                        print('Login Successfully!');
+                      
+                      // check if data are valid
+                      if(_formkey.currentState!.validate()){
+                        _login();
                       }
-                      _login();
-        
-                    },
+
+                        Navigator.pushReplacement(context, 
+                        MaterialPageRoute(builder: (_) => const HomeScreen())
+                        );
+                      }
+        ,
                     textColor: Colorz.textBlack,
                     ),
                     
@@ -166,4 +196,6 @@ _login()async{
       ),
     );
   }
+  
+  
 }
