@@ -1,6 +1,6 @@
 # TapTrend
 
-I have created a TapTrend app using Flutter. It has implement Near-field communication(NFC) is a wireless technology that allows devices to exchange data over short distances. NFC is used in a variety of applications, such as contactless payments, mobile wallets, and access control systems.
+I have created a TapTrend app using Flutter. It has implement Near-field communication(NFC) is a wireless technology that allows devices to exchange data over short distances. NFC is used in a variety of applications, such as contactless payments, mobile wallets, and access control systems. It is a new digital technology and user can easily share the own information to what did happen the work.
 
 # Introduction of NFC in Flutter
 
