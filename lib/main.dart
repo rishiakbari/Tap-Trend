@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:taptrend/firebase_options.dart';
+import 'package:taptrend/home_screen.dart';
+import 'package:taptrend/login_page.dart';
 import 'package:taptrend/splashscreen.dart';
 
 
@@ -8,10 +11,10 @@ import 'package:taptrend/splashscreen.dart';
   WidgetsFlutterBinding.ensureInitialized();
   
   // enter full screen
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   // for setting orientation to protrait only
-  // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]);
    
    await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,);
@@ -32,10 +35,12 @@ class MyApp extends StatelessWidget {
         
       ),
       home: const splashscreen(),
-      //  initialRoute: '/',
-      //  routes: {
-      //    '/': (context) => const splashscreen(),
-      //  },
+       initialRoute: '/',
+       routes: {
+         splashscreen.routeName:(context)  => const splashscreen(),
+         LoginScreen.routeName: (context) => const LoginScreen(),
+         HomeScreen.routeName: (context) => const HomeScreen(),
+       },
     );
   }
 }
