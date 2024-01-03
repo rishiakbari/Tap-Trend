@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:taptrend/service/api_service.dart';
-import 'package:taptrend/utils/api.dart';
+// import 'package:taptrend/utils/api.dart';
 // import 'package:taptrend/models/login_model.dart';
 // import 'package:taptrend/service/api_service.dart';
 
@@ -76,8 +76,8 @@ _login()async{
                         // ? null
                         // : 'please enter your currect name',
                         controller: userNameController,
-                        validator: (p0) {
-                          if(p0!.isEmpty || RegExp(r'^[a-z A-Z]+$').hasMatch(p0!)){
+                        validator: (val) {
+                          if(val!.isEmpty || RegExp(r'^[a-z A-Z]+$').hasMatch(val!)){
                             return "please enter your currect name";
                           }else{
                             return null;
@@ -133,8 +133,7 @@ _login()async{
                   child: CustomTextButton(
                     text: "Login",
                     onPressed: () {
-                      if(_formkey.currentState!.validate()){
-                        // check if data are valid
+                      if(_formkey.currentState!.validate()){  // check if data are valid
                         _formkey.currentState?.save;
                         // Api.
                         print('Login Successfully!');
