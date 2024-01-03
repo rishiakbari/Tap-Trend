@@ -20,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.onChanged,
+    this.validator,
     this.outLine = false,
     this.fillColor,
   });
@@ -38,6 +39,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool readOnly;
   final Function()? onTap;
   final Function(String)? onChanged;
+  final String? Function(String?)? validator;
   final Color? fillColor;
 
   @override
@@ -91,6 +93,7 @@ class CustomTextFormField extends StatelessWidget {
         readOnly: readOnly,
         onTap: onTap,
         onChanged: onChanged,
+        validator:validator ,
         onTapOutside: (event) {
           FocusScopeNode currentFocus = FocusScope.of(context);
           if (!currentFocus.hasPrimaryFocus &&
