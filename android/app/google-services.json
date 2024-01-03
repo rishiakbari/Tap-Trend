@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "80882013467",
+    "project_id": "taptrend-1707a",
+    "storage_bucket": "taptrend-1707a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80882013467:android:3b9981ecb1c849e596afbe",
+        "android_client_info": {
+          "package_name": "com.example.taptrend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "80882013467-95q3l1fqn4kgq4s14qumigqr2uln4qvp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtP3l1UhSkGjYIGZiS7xw5Hh_RpSGLwjQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "80882013467-95q3l1fqn4kgq4s14qumigqr2uln4qvp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
