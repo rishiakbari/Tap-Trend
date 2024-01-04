@@ -1,7 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:taptrend/firebase_options.dart';
+
 import 'package:taptrend/home_screen.dart';
 import 'package:taptrend/login_page.dart';
 import 'package:taptrend/splashscreen.dart';
@@ -16,8 +16,7 @@ import 'package:taptrend/splashscreen.dart';
   // for setting orientation to protrait only
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]);
    
-   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,);
+   
     runApp(const MyApp());
  }
 class MyApp extends StatelessWidget {
@@ -34,10 +33,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         
       ),
-      home: const splashscreen(),
+      home: const SplashScreen(),
        initialRoute: '/',
        routes: {
-         splashscreen.routeName:(context)  => const splashscreen(),
+         SplashScreen.routeName:(context)  => const SplashScreen(),
          LoginScreen.routeName: (context) => const LoginScreen(),
          HomeScreen.routeName: (context) => const HomeScreen(),
        },
