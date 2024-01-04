@@ -6,30 +6,41 @@ import 'package:taptrend/home_screen.dart';
 import 'package:taptrend/login_page.dart';
 // import 'package:taptrend/loginpage.dart';
 
-class splashscreen extends StatefulWidget {
-  const splashscreen({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   static const routeName = '/firest';
 
   @override
-  State<splashscreen> createState() => _splashscreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _splashscreenState extends State<splashscreen> {
+class _SplashScreenState extends State<SplashScreen> {
 
     late SharedPreferences _sharedPreferences;
 
 
 void init()async{
-  var _sharedPreferences = await SharedPreferences.getInstance();
+
+   _sharedPreferences = await SharedPreferences.getInstance();
+
   var token = _sharedPreferences.getString('authToken');
+
   if(token != null){
-    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-  }else{
-   Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+    if(mounted){
+      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+    }
+    
+  }
+  else{
+    if(mounted){
+        Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+    }
+   
   }
  
 }
+@override
   void initState(){
     super.initState();
      Future.delayed(const Duration(milliseconds:4500),(){

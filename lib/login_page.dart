@@ -35,16 +35,23 @@ TextEditingController userNameController= TextEditingController();
 late SharedPreferences _sharedPreferences;
 
 void _init() async {
-    var _sharedPreferences = await SharedPreferences.getInstance();
+    
   //  var isLoggined= _sharedPreferences.getBool('login');
 }
 
 _login()async{
+   _sharedPreferences = await SharedPreferences.getInstance();
   LoginModel login = await ApiService.login(username: userNameController.text, password: passwordController.text);
-  if(login.body!=null){
+  // print(login.statusCode);
+  
+  if (login.body!=null){
+    // print(login.body);
     _sharedPreferences.setString('authToken', login.body!.token.toString());
           _sharedPreferences.setString('authUser', jsonEncode(login.body!));
-    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+          if(mounted){
+            Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+            }
+    
   }else{
     if(mounted){
       Helper.showSnackBar(context: context, text: login.message!);
@@ -55,7 +62,6 @@ _login()async{
 }
 @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _init();
   }
@@ -108,7 +114,7 @@ _login()async{
                  // : 'please enter your currect name',
                  
                  validator: (isLoggined) {
-                   if(isLoggined!.isEmpty || RegExp(r'^[a-z A-Z]+$').hasMatch(isLoggined)){
+                   if(isLoggined!.isEmpty){
                      return "required field";
                    }else{
                      return null;
@@ -123,7 +129,7 @@ _login()async{
         
                 CustomTextFormField(
                   validator: (isLoggined) {
-                    if(isLoggined!.isEmpty || RegExp(r'^[+]*[()]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]+$').hasMatch(isLoggined)){
+                    if(isLoggined!.isEmpty){
                       return "required field";
                     }else{
                       return null;
@@ -156,25 +162,20 @@ _login()async{
                 ),
         
                  const SizedBox(height: 8,),
-                Container(
-                  child: CustomTextButton(
-                    text: "Login",
-                    onPressed: () {
-                      
-                      // check if data are valid
-                      if(_formkey.currentState!.validate()){
-                        _login();
-                      }
 
-                        Navigator.pushReplacement(context, 
-                        MaterialPageRoute(builder: (_) => const HomeScreen())
-                        );
-                      }
-        ,
-                    textColor: Colorz.textBlack,
-                    ),
+                CustomTextButton(
+                  text: "Login",
+                  onPressed: () {
                     
-                ),
+                    // check if data are valid
+                    if(_formkey.currentState!.validate()){
+                      // print("Success1full1111111111");
+                      _login();
+                    }
+                    }
+                        ,
+                  textColor: Colorz.textBlack,
+                  ),
                 const SizedBox(height: 100,),
           
                 const Text(
