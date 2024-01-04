@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF000000),
+      backgroundColor:const Color(0xFF000000),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -75,7 +75,7 @@ Navigator.of(context).push(MaterialPageRoute(
 
 
               }, 
-            child: Text('Scan QR',style: TextStyle(fontSize: 25),),
+            child: const Text('Scan QR',style: TextStyle(fontSize: 25),),
             )
           ],
         ),
