@@ -1,6 +1,5 @@
 // import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taptrend/home_screen.dart';
 import 'package:taptrend/login_page.dart';
@@ -43,10 +42,8 @@ void init()async{
 @override
   void initState(){
     super.initState();
-     Future.delayed(const Duration(milliseconds:4500),(){
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+     
       init();
-    });
   }
   @override
   Widget build(BuildContext context) {

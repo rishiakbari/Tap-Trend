@@ -41,7 +41,7 @@ void _init() async {
 
 _login()async{
    _sharedPreferences = await SharedPreferences.getInstance();
-  LoginModel login = await ApiService.login(username: userNameController.text, password: passwordController.text);
+  LoginModel login = await ApiService.login(username: userNameController.text,password: passwordController.text);
   // print(login.statusCode);
   
   if (login.body!=null){
