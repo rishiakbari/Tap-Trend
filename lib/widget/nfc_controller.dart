@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nfc_manager/nfc_manager.dart';
+import 'package:taptrend/utils/helper.dart';
 
 import '../utils/colorz.dart';
 import 'custom_text_button.dart';
@@ -25,6 +25,7 @@ class _NfcControllerState extends State<NfcController> {
     NfcManager.instance.startSession(
       onDiscovered: (NfcTag tag) async {
         Ndef? ndef = Ndef.from(tag);
+
         // NdefMessage message = ndef!.cachedMessage!;
         // final List<int> nfcData = message.records.first.payload.toList();
         // nfcData.removeAt(0);
@@ -33,11 +34,27 @@ class _NfcControllerState extends State<NfcController> {
         NdefMessage message =
               NdefMessage([NdefRecord.createUri(widget.url)]);
 
-            
-            
-          await Ndef.from(tag)?.write(message);//If it supports NDEF, create an NDEF message and write it to the tag.
+              if (ndef!.additionalData['canMakeReadOnly'] == false)
+                 throw('This operation is not allowed on this tag.');
+                 await Ndef.from(tag)?.write(message);
+                 try {
+                  await ndef.writeLock();
+                  } on PlatformException catch (e) {
+                      throw(
+                      e.message 
+                      ?? Helper.showSnackBar(context: context, text: "Lock the NFC card"));
+
+                    // Helper.showSnackBar(context: context, text: 'Some error has occured');
+                }
+
+          //If it supports NDEF, create an NDEF message and write it to the tag.
           // await Ndef.from(tag)?.//If it supports NDEF, create an NDEF message and write it to the tag.
-          debugPrint('Data emitted successfully');
+          if(mounted){
+          Helper.showSnackBar(
+            context: context,text:'Data emitted successfully' , 
+            color:const Color(0xFF008000),
+            );}
+          // debugPrint('Data emitted successfully');
           Uint8List payload = message.records.first.payload;
           String text = String.fromCharCodes(payload);
 
