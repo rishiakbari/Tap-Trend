@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "80882013467",
-    "project_id": "taptrend-1707a",
-    "storage_bucket": "taptrend-1707a.appspot.com"
+    "project_number": "497328652569",
+    "project_id": "taptrend-fa4a9",
+    "storage_bucket": "taptrend-fa4a9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:80882013467:android:3b9981ecb1c849e596afbe",
+        "mobilesdk_app_id": "1:497328652569:android:eca579d449c10298f9c588",
         "android_client_info": {
           "package_name": "com.example.taptrend"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "80882013467-95q3l1fqn4kgq4s14qumigqr2uln4qvp.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBtP3l1UhSkGjYIGZiS7xw5Hh_RpSGLwjQ"
+          "current_key": "AIzaSyBHEwNrW5RWSgV8c_TrNG1VFN9O8DUa_XM"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "80882013467-95q3l1fqn4kgq4s14qumigqr2uln4qvp.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
