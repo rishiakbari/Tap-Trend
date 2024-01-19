@@ -42,18 +42,14 @@ class _NfcControllerState extends State<NfcController> {
                   } on PlatformException catch (e) {
                       throw(
                       e.message 
-                      ?? Helper.showSnackBar(context: context, text: "Lock the NFC card"));
-
-                    // Helper.showSnackBar(context: context, text: 'Some error has occured');
+                      ?? 
+                      Helper.showSnackBar(context: context, text: "Lock the NFC card"));
                 }
+                 
 
           //If it supports NDEF, create an NDEF message and write it to the tag.
           // await Ndef.from(tag)?.//If it supports NDEF, create an NDEF message and write it to the tag.
-          if(mounted){
-          Helper.showSnackBar(
-            context: context,text:'Data emitted successfully' , 
-            color:const Color(0xFF008000),
-            );}
+         
           // debugPrint('Data emitted successfully');
           Uint8List payload = message.records.first.payload;
           String text = String.fromCharCodes(payload);
@@ -63,6 +59,11 @@ class _NfcControllerState extends State<NfcController> {
           widget.getUrl(widget.url.toString());
           NfcManager.instance.stopSession();
           Navigator.of(context).pop();
+           if(mounted){
+          Helper.showSnackBar(
+            context: context,text:'Data emitted successfully' , 
+            color:const Color(0xFF008000),
+            );}
         });
       },
     );
