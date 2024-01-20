@@ -45,6 +45,7 @@ dependencies:
   nfc_manager: ^3.3.0
   lottie: ^2.7.0
   firebase_core: ^2.24.2
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:
