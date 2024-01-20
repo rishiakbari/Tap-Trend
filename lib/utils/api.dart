@@ -6,7 +6,7 @@ class Api {
   static const String profileBaseUrl = 'https://taptrend.in/';
 
   static Uri login = Uri.parse('${baseUrl}nfc-user/login');
-  // static Uri authProfile = Uri.parse('${baseUrl}auth/profile');
+  static Uri authProfile = Uri.parse('${baseUrl}auth/profile');
   // static Uri appDetail = Uri.parse('${baseUrl}app-detail');
   // static Uri referralCodeRedeem = Uri.parse('${baseUrl}referral-code/redeem');
   // static Uri getCard = Uri.parse('${baseUrl}card');
