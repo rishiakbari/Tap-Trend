@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:taptrend/create_profile_screen.dart';
 
 import 'package:taptrend/home_screen.dart';
+import 'package:taptrend/insights_screen.dart';
 import 'package:taptrend/login_page.dart';
+import 'package:taptrend/share_screen.dart';
 // import 'package:taptrend/profile_screen.dart';
 import 'package:taptrend/splashscreen.dart';
 
@@ -39,7 +42,9 @@ class MyApp extends StatelessWidget {
          SplashScreen.routeName:(context)  => const SplashScreen(),
          LoginScreen.routeName: (context) => const LoginScreen(),
          HomeScreen.routeName: (context) => const HomeScreen(),
-        //  ProfileScreen.routeName: (context) => const ProfileScreen(),
+         CreateProfileScreen.routeName: (context) => const CreateProfileScreen(),
+         ShareScreen.routeName: (context) => const ShareScreen(),
+         InsightScreen.routeName: (context) => const InsightScreen(),
        },
     );
   }
