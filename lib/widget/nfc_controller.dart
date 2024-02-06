@@ -25,6 +25,10 @@ class _NfcControllerState extends State<NfcController> {
     NfcManager.instance.startSession(
       onDiscovered: (NfcTag tag) async {
         Ndef? ndef = Ndef.from(tag);
+        if (ndef == null || !ndef.isWritable) {
+        NfcManager.instance.stopSession(errorMessage: 'Ndef is not writable');
+        return;
+      }
 
         // NdefMessage message = ndef!.cachedMessage!;
         // final List<int> nfcData = message.records.first.payload.toList();
@@ -33,19 +37,8 @@ class _NfcControllerState extends State<NfcController> {
 
         NdefMessage message =
               NdefMessage([NdefRecord.createUri(widget.url)]);
-
-              if (ndef!.additionalData['canMakeReadOnly'] == false)
-                 throw('This operation is not allowed on this tag.');
-                 await Ndef.from(tag)?.write(message);
-                 try {
-                  await ndef.writeLock();
-                  } on PlatformException catch (e) {
-                      throw(
-                      e.message 
-                      ?? 
-                      Helper.showSnackBar(context: context, text: "Lock the NFC card"));
-                }
-                 
+              
+              await ndef.write(message);
 
           //If it supports NDEF, create an NDEF message and write it to the tag.
           // await Ndef.from(tag)?.//If it supports NDEF, create an NDEF message and write it to the tag.
@@ -53,7 +46,6 @@ class _NfcControllerState extends State<NfcController> {
           // debugPrint('Data emitted successfully');
           Uint8List payload = message.records.first.payload;
           String text = String.fromCharCodes(payload);
-
           
         Timer(const Duration(seconds: 1), () async {
           widget.getUrl(widget.url.toString());

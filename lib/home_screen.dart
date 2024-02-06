@@ -6,7 +6,7 @@ import 'package:taptrend/widget/qr_screens.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-static const routeName = '/thired';
+  static const routeName = '/thired';
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -15,67 +15,63 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:const Color(0xFF000000),
+      backgroundColor: const Color(0xFF000000),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: (){
-
-Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => QrScreens(
-                          getUrl: (url) async {
-                            if (url.contains("profile.taptrend")) {
-                              bool isAvailable =
-                          await NfcManager.instance.isAvailable();
-                      if (isAvailable && mounted) {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) => NfcController(
-                              url: Uri.parse(url),
-                                  getUrl: (url) {
-                                    if (url.contains("profile.taptrend")) {
-
-
-                                      
-                                    } else {
-                                      if (context.mounted) {
-                                        if (mounted) {
-                                          Helper.showSnackBar(
-                                              context: context,
-                                              text: "nvalid NFC card");
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => QrScreens(
+                    getUrl: (url) async {
+                      if (url.contains("profile.taptrend")) {
+                        bool isAvailable =
+                            await NfcManager.instance.isAvailable();
+                        if (isAvailable && mounted) {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) => NfcController(
+                                    url: Uri.parse(url),
+                                    getUrl: (url) {
+                                      if (url.contains("profile.taptrend")) {
+                                      } else {
+                                        if (context.mounted) {
+                                          if (mounted) {
+                                            Helper.showSnackBar(
+                                                context: context,
+                                                text: "Invalid NFC card");
+                                          }
                                         }
                                       }
-                                    }
-                                  },
-                                ),
-                            backgroundColor: Colors.transparent);
+                                    },
+                                  ),
+                              backgroundColor: Colors.transparent);
+                        } else {
+                          if (mounted) {
+                            Helper.showSnackBar(
+                                context: context,
+                                text:
+                                    "This device does not support or disabled NFC");
+                          }
+                        }
                       } else {
-                        if (mounted) {
-                          Helper.showSnackBar(
-                              context: context,
-                              text:
-                                  "This device does not support or disabled NFC");
+                        if (context.mounted) {
+                          if (mounted) {
+                            Helper.showSnackBar(
+                                context: context, text: "Invalid QR");
+                          }
                         }
                       }
-                              
-                            } else {
-                              if (context.mounted) {
-                                if (mounted) {
-                                  Helper.showSnackBar(
-                                      context: context, text: "Invalid QR");
-                                }
-                              }
-                            }
-                          },
-                        ),
-                      ));
-
-
-              }, 
-            child: const Text('Scan QR',style: TextStyle(fontSize: 25),),
+                    },
+                  ),
+                ));
+              },
+              child: const Text(
+                'Scan QR',
+                style: TextStyle(fontSize: 25),
+              ),
             )
           ],
         ),
