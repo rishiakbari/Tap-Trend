@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:taptrend/widget/custom_app_bar.dart';
 
 import '../utils/colorz.dart';
 import '../utils/helper.dart';
+import 'custom_app_bar.dart';
 
 class QrScreens extends StatefulWidget {
   final Function(String url) getUrl;
@@ -42,6 +42,7 @@ class _QrScreensState extends State<QrScreens> {
   }
 
   Widget _buildQrView(BuildContext context) {
+
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
             MediaQuery.of(context).size.height < 400)
@@ -66,6 +67,7 @@ class _QrScreensState extends State<QrScreens> {
     setState(() {
       this.controller = controller;
     });
+
     controller.scannedDataStream.listen((scanData) {
       this.controller?.pauseCamera();
       this.controller?.dispose();
@@ -73,10 +75,12 @@ class _QrScreensState extends State<QrScreens> {
       widget.getUrl(result.code.toString());
       Navigator.of(context).pop();
     });
+
   }
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     if (!p) {
+
       Navigator.of(context).pop();
       Helper.showSnackBar(
           context: context, text: "Please give camera permission");
